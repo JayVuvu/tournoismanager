@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Tournois</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="nav-item active" data-view="instructions">Instructions</div>
+            <div class="nav-item" data-view="teams">Équipes</div>
+            <div class="nav-item" data-view="tournament-config">Configuration</div>
+            <div class="nav-item" data-view="matches">Matchs</div>
+            <div class="nav-item" data-view="scoreboard">Classement</div>
+            <div class="signature">
+                <img src="assets/moi.png" alt="VUARAND" class="signature-img">
+                <div class="signature-text">
+                    Powered by<br>
+                    <strong>VUARAND</strong><br>
+                    <span class="copyright">© 2024 Tous droits réservés</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="content">
+            <!-- Vue Instructions -->
+            <section id="instructions-view" class="view active">
+                <h1>Guide d'utilisation</h1>
+                
+                <div class="instructions-container">
+                    <div class="instruction-step">
+                        <h2>1. Gestion des équipes</h2>
+                        <p>Commencez par créer les équipes qui participeront au tournoi :</p>
+                        <ul>
+                            <li>Allez dans l'onglet "Équipes"</li>
+                            <li>Entrez le nom de chaque équipe et cliquez sur "Ajouter"</li>
+                            <li>Vous pouvez supprimer une équipe en cliquant sur le bouton rouge</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-step">
+                        <h2>2. Configuration du tournoi</h2>
+                        <p>Configurez les paramètres du tournoi :</p>
+                        <ul>
+                            <li>Sélectionnez le nombre de terrains disponibles (1 à 3)</li>
+                            <li>Définissez les horaires de début et de fin du tournoi</li>
+                            <li>Ajoutez un délai entre les rounds si nécessaire</li>
+                            <li>Configurez le système de points (victoire/nul/défaite)</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-step">
+                        <h2>3. Gestion des matchs</h2>
+                        <p>Pour chaque match :</p>
+                        <ul>
+                            <li>Un chronomètre est disponible avec les options :</li>
+                            <ul>
+                                <li>Démarrer : Lance le chronomètre</li>
+                                <li>Pause : Met en pause le chronomètre</li>
+                                <li>Reprendre : Continue après une pause</li>
+                                <li>Arrêter : Arrête définitivement le chronomètre</li>
+                            </ul>
+                            <li>Entrez les scores une fois le match terminé</li>
+                            <li>Validez le résultat pour mettre à jour le classement</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-step">
+                        <h2>4. Suivi du tournoi</h2>
+                        <p>Pendant le tournoi :</p>
+                        <ul>
+                            <li>Consultez le planning des matchs dans l'onglet "Matchs"</li>
+                            <li>Suivez le classement en temps réel dans l'onglet "Classement"</li>
+                            <li>Les temps de pause entre les rounds sont indiqués dans le planning</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-note">
+                        <h3>Note importante</h3>
+                        <p>Vous pouvez réinitialiser le tournoi à tout moment en utilisant le bouton "Réinitialiser le tournoi". 
+                        Cette action conservera les équipes mais effacera tous les scores et le planning.</p>
+                    </div>
+                    <div class="copyright-notice">
+                        * Cette application est protégée par le droit d'auteur. 
+                        Toute reproduction ou utilisation non autorisée est strictement interdite.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vue Équipes -->
+            <section id="teams-view" class="view">
+                <h1>Gestion des Équipes</h1>
+                <form id="team-form">
+                    <input type="text" id="team-name" placeholder="Nom de l'équipe" required>
+                    <button type="submit" class="btn-primary">Ajouter</button>
+                </form>
+                <div id="teams-list"></div>
+            </section>
+
+            <!-- Vue Configuration du Tournoi -->
+            <section id="tournament-config-view" class="view">
+                <h1>Configuration du Tournoi</h1>
+                <form id="tournament-config">
+                    <div class="config-container">
+                        <div class="config-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Configuration des terrains</h3>
+                                <div class="form-group">
+                                    <label>Nombre de terrains disponibles</label>
+                                    <select id="courts-number" data-tooltip="Sélectionnez le nombre de terrains disponibles">
+                                        <option value="1">1 terrain</option>
+                                        <option value="2">2 terrains</option>
+                                        <option value="3">3 terrains</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Horaires et timing</h3>
+                                <div class="time-config">
+                                    <div>
+                                        <label>Heure de début</label>
+                                        <input type="time" id="start-time" required value="09:00" 
+                                               data-tooltip="Heure de début du tournoi">
+                                    </div>
+                                    <div>
+                                        <label>Heure de fin</label>
+                                        <input type="time" id="end-time" required value="18:00"
+                                               data-tooltip="Heure de fin du tournoi">
+                                    </div>
+                                    <div>
+                                        <label>Délai entre les rounds</label>
+                                        <select id="round-delay" data-tooltip="Temps de pause entre chaque round">
+                                            <option value="0.5">30 secondes</option>
+                                            <option value="1">1 minute</option>
+                                            <option value="2">2 minutes</option>
+                                            <option value="3">3 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Système de points</h3>
+                                <div class="points-config">
+                                    <div class="points-input">
+                                        <label>Points pour une victoire</label>
+                                        <input type="number" id="win-points" value="3" min="1" required
+                                               data-tooltip="Points attribués pour une victoire">
+                                    </div>
+                                    <div class="points-input">
+                                        <label>Points pour un match nul</label>
+                                        <input type="number" id="draw-points" value="1" min="0" required
+                                               data-tooltip="Points attribués pour un match nul">
+                                    </div>
+                                    <div class="points-input">
+                                        <label>Points pour une défaite</label>
+                                        <input type="number" id="loss-points" value="0" min="0" required
+                                               data-tooltip="Points attribués pour une défaite">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-summary">
+                            <div class="summary-content">
+                                <h4>Résumé de la configuration</h4>
+                                <div id="config-preview"></div>
+                            </div>
+                            <button type="submit" class="btn-primary btn-generate" id="generate-tournament">
+                                <span class="btn-icon">🏆</span>
+                                Générer le tournoi
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Vue Planning des Matchs -->
+            <section id="matches-view" class="view">
+                <h1>Planning des Matchs</h1>
+                <div class="actions-bar">
+                    <button class="btn-danger" onclick="tournamentManager.resetTournament()">
+                        Réinitialiser le tournoi
+                    </button>
+                </div>
+                <div id="matches-schedule"></div>
+            </section>
+
+            <!-- Vue Classement -->
+            <section id="scoreboard-view" class="view">
+                <h1>Classement</h1>
+                <div class="podium-container">
+                    <div class="podium">
+                        <div class="podium-position silver">
+                            <div class="trophy">🥈</div>
+                            <div class="position">2</div>
+                            <div class="podium-block"></div>
+                            <div class="team-name" id="second-place">-</div>
+                        </div>
+                        <div class="podium-position gold">
+                            <div class="trophy">🏆</div>
+                            <div class="position">1</div>
+                            <div class="podium-block"></div>
+                            <div class="team-name" id="first-place">-</div>
+                        </div>
+                        <div class="podium-position bronze">
+                            <div class="trophy">🥉</div>
+                            <div class="position">3</div>
+                            <div class="podium-block"></div>
+                            <div class="team-name" id="third-place">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rankings"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/database.js"></script>
+    <script src="scripts/teams.js"></script>
+    <script src="scripts/tournament.js"></script>
+    <script src="scripts/scoreboard.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html> 
