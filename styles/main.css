@@ -1237,16 +1237,18 @@ h3 {
 .config-container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 .config-step {
     background: white;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     display: flex;
-    gap: 20px;
+    gap: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .config-step:hover {
@@ -1255,8 +1257,8 @@ h3 {
 }
 
 .step-number {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background: var(--primary-color);
     color: white;
     border-radius: 50%;
@@ -1264,7 +1266,8 @@ h3 {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .step-content {
@@ -1272,18 +1275,20 @@ h3 {
 }
 
 .step-content h3 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: var(--primary-color);
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-.time-config {
+.time-config, .points-config {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
     background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .time-config > div {
@@ -1298,33 +1303,18 @@ h3 {
     padding-right: 70px; /* Espace pour le suffixe "minutes" */
 }
 
-.points-config {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.points-input {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.points-input input {
+.points-config input {
     width: 100%;
 }
 
 .config-summary {
     background: var(--primary-color);
     color: white;
-    border-radius: 12px;
-    padding: 25px;
+    border-radius: 16px;
+    padding: 30px;
     margin-top: 40px;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .summary-content {
@@ -1334,19 +1324,27 @@ h3 {
 .btn-generate {
     background: white;
     color: var(--primary-color);
-    font-size: 16px;
-    padding: 12px 24px;
-    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 12px;
     transition: all 0.3s ease;
+    margin-top: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-generate:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-generate:active {
+    transform: translateY(-1px);
 }
 
 .btn-icon {
-    margin-right: 8px;
+    margin-right: 10px;
+    font-size: 20px;
 }
 
 /* Tooltips améliorés */
@@ -1411,18 +1409,39 @@ h3 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 20px;
+    padding: 25px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: 12px;
+    margin: 20px 0;
 }
 
 .preview-section {
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    transition: transform 0.2s ease;
 }
 
-/* Faire que la section points prenne toute la largeur */
+.preview-section:hover {
+    transform: translateY(-2px);
+}
+
+.preview-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.9;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.preview-value {
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Améliorer la section des points */
 .points-preview {
     grid-column: 1 / -1;
 }
@@ -1432,31 +1451,498 @@ h3 {
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .point-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    min-width: 120px;
-    padding: 8px 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    font-size: 15px;
+    min-width: 140px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.preview-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.8;
-    text-align: center;
-    margin-bottom: 5px;
+.point-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
-.preview-value {
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
+/* Menu mobile */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        min-height: auto;
+        height: 60px;
+        border: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        padding: 8px 16px;
+        margin: 0 5px;
+        font-size: 14px;
+        border-radius: 20px;
+        white-space: nowrap;
+        color: var(--secondary-text-color);
+    }
+
+    .nav-item:first-child {
+        margin-left: 15px;
+    }
+
+    .nav-item:last-child {
+        margin-right: 15px;
+        margin-bottom: 0;
+    }
+
+    .nav-item.active {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    /* Masquer la signature sur mobile */
+    .signature {
+        display: none;
+    }
+
+    /* Ajuster le contenu principal */
+    .content {
+        margin-top: 60px; /* Hauteur du menu */
+        padding: 15px;
+    }
+
+    /* Masquer la scrollbar du menu */
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .sidebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Améliorer les transitions entre les vues */
+    .view {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+    }
+
+    .view.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Configuration du tournoi */
+    .config-step {
+        flex-direction: column;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .time-config, .points-config {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    /* Résumé de configuration */
+    .preview-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .points-preview .preview-value {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .point-item {
+        width: 100%;
+    }
+
+    /* Planning des matchs */
+    .match-teams {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .match-versus {
+        margin: 5px 0;
+    }
+
+    .team {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .score-input {
+        width: 60px;
+    }
+
+    .match-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .match-actions button {
+        width: 100%;
+    }
+
+    /* Classement */
+    .podium-container {
+        padding: 10px;
+        margin: 10px 0 30px;
+    }
+
+    .podium {
+        flex-direction: row;
+        height: 150px;
+        padding: 10px;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .podium-position {
+        width: 30%;
+        max-width: 100px;
+    }
+
+    .podium-block {
+        width: 100%;
+    }
+
+    .gold .podium-block {
+        height: 100px;
+    }
+
+    .silver .podium-block {
+        height: 75px;
+    }
+
+    .bronze .podium-block {
+        height: 50px;
+    }
+
+    .trophy {
+        font-size: 20px;
+        top: -25px;
+    }
+
+    .position {
+        top: -40px;
+        font-size: 16px;
+    }
+
+    .podium-position .team-name {
+        font-size: 12px;
+        width: auto;
+        padding: 0 5px;
+        bottom: -20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    /* Améliorer le chronomètre sur mobile */
+    .match-timer {
+        font-size: 16px;
+        padding: 8px;
+        margin: 8px 0;
+    }
+
+    .timer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+        margin-top: 8px;
+    }
+
+    .btn-timer {
+        flex: 1;
+        min-width: 80px;
+        max-width: 120px;
+        padding: 8px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    /* Ajuster l'espacement des matchs */
+    .match {
+        padding: 12px;
+    }
+
+    .match-header {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .match-teams {
+        margin-bottom: 10px;
+    }
+
+    /* Améliorer la lisibilité des scores */
+    .score-input {
+        width: 50px;
+        height: 35px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .team {
+        gap: 3px;
+    }
+
+    .team-name {
+        font-size: 13px;
+    }
+
+    .rankings-table {
+        font-size: 14px;
+    }
+
+    .rankings-table th, 
+    .rankings-table td {
+        padding: 8px;
+    }
+
+    /* Gestion des équipes */
+    #team-form {
+        flex-direction: column;
+    }
+
+    #team-form input {
+        max-width: none;
+    }
+
+    .team-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+/* Ajustements supplémentaires pour très petits écrans */
+@media screen and (max-width: 375px) {
+    .nav-item {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .match {
+        padding: 10px;
+    }
+
+    .point-item {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    .podium {
+        height: 120px;
+    }
+
+    .trophy {
+        font-size: 18px;
+        top: -22px;
+    }
+
+    .position {
+        top: -35px;
+        font-size: 14px;
+    }
+
+    .podium-position .team-name {
+        font-size: 11px;
+    }
+
+    .btn-timer {
+        min-width: 70px;
+        padding: 6px;
+        font-size: 11px;
+    }
+}
+
+/* Ajustements pour le mode sombre */
+@media screen and (max-width: 768px) {
+    [data-theme="dark"] .sidebar {
+        background: rgba(26, 26, 26, 0.98);
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+/* Style du copyright mobile */
+@media screen and (max-width: 768px) {
+    .signature {
+        display: flex;
+        position: static;
+        margin-top: 40px;
+        padding: 20px;
+        border-top: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .signature-img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .signature-text {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .signature-text strong {
+        font-size: 15px;
+    }
+
+    .signature-text .copyright {
+        font-size: 11px;
+    }
+
+    /* Ajouter un padding en bas du contenu pour éviter que le copyright ne chevauche */
+    .content {
+        padding-bottom: 40px;
+    }
+
+    /* Effet subtil au survol */
+    .signature:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+}
+
+/* Ajustements pour très petits écrans */
+@media screen and (max-width: 375px) {
+    .signature {
+        margin: 30px 10px;
+        padding: 15px;
+    }
+
+    .signature-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .signature-text {
+        font-size: 13px;
+    }
+}
+
+/* Ajustements pour le mode sombre */
+@media screen and (max-width: 768px) {
+    [data-theme="dark"] .signature {
+        background: rgba(26, 26, 26, 0.8);
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+/* Style pour la signature mobile dans les instructions */
+.mobile-signature {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-signature {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-signature .signature-img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+
+    .mobile-signature .signature-text {
+        font-size: 15px;
+        line-height: 1.4;
+        color: var(--text-color);
+    }
+
+    .mobile-signature .signature-text strong {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    /* Ajustement pour le mode sombre */
+    [data-theme="dark"] .mobile-signature {
+        background: rgba(26, 26, 26, 0.8);
+    }
+}
+
+/* Ajustements pour très petits écrans */
+@media screen and (max-width: 375px) {
+    .mobile-signature {
+        padding: 15px;
+    }
+
+    .mobile-signature .signature-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .mobile-signature .signature-text {
+        font-size: 14px;
+    }
+
+    .mobile-signature .signature-text strong {
+        font-size: 15px;
+    }
 } 
