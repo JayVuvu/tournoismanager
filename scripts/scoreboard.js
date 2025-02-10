@@ -18,18 +18,22 @@ class ScoreboardManager {
             return;
         }
 
-        // Calculer le classement
+        // Calculer le classement avec prise en compte des fautes
         const rankings = teams.map(team => ({
             ...team,
             ...scores[team.id],
             goalDifference: (scores[team.id]?.goalsFor || 0) - (scores[team.id]?.goalsAgainst || 0),
             matchesPlayed: this.calculateMatchesPlayed(team.id)
         })).sort((a, b) => {
-            // Trier par points, puis différence de buts, puis buts marqués
+            // D'abord par points
             if (b.points !== a.points) return b.points - a.points;
+            // Puis par différence de buts
             const goalDiffA = a.goalsFor - a.goalsAgainst;
             const goalDiffB = b.goalsFor - b.goalsAgainst;
             if (goalDiffB !== goalDiffA) return goalDiffB - goalDiffA;
+            // En cas d'égalité, l'équipe avec le moins de fautes est avantagée
+            if (a.fouls !== b.fouls) return a.fouls - b.fouls;
+            // Enfin par buts marqués
             return b.goalsFor - a.goalsFor;
         });
 
@@ -47,10 +51,11 @@ class ScoreboardManager {
                     <th>Position</th>
                     <th>Équipe</th>
                     <th>Points</th>
-                    <th>Matchs joués</th>
+                    <th>Matchs</th>
                     <th>Buts pour</th>
                     <th>Buts contre</th>
                     <th>Différence</th>
+                    <th>Fautes</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,6 +68,7 @@ class ScoreboardManager {
                         <td>${team.goalsFor || 0}</td>
                         <td>${team.goalsAgainst || 0}</td>
                         <td class="${team.goalDifference > 0 ? 'positive' : team.goalDifference < 0 ? 'negative' : ''}">${team.goalDifference > 0 ? '+' : ''}${team.goalDifference}</td>
+                        <td class="${team.fouls > 0 ? 'negative' : ''}">${team.fouls || 0}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -98,6 +104,63 @@ class ScoreboardManager {
             });
         });
         return count;
+    }
+
+    renderTeamStats(team) {
+        return `
+            <div class="team-stats-card">
+                <h3>${team.name}</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">${team.matchesPlayed}</div>
+                        <div class="stat-label">Matchs joués</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${team.points}</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${team.goalsFor}</div>
+                        <div class="stat-label">Buts marqués</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${(team.goalsFor / team.matchesPlayed).toFixed(1)}</div>
+                        <div class="stat-label">Moyenne/match</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    exportResults() {
+        const teams = db.getTeams();
+        const scores = db.getScores();
+        const tournament = db.getTournament();
+
+        const data = {
+            date: new Date().toLocaleDateString(),
+            teams: teams.map(team => ({
+                name: team.name,
+                stats: scores[team.id],
+                matches: tournament.matches.flat().filter(m => 
+                    m.team1.id === team.id || m.team2.id === team.id
+                ).map(m => ({
+                    opponent: m.team1.id === team.id ? m.team2.name : m.team1.name,
+                    score: m.team1.id === team.id ? 
+                        `${m.score1}-${m.score2}` : 
+                        `${m.score2}-${m.score1}`,
+                    fouls: m.team1.id === team.id ? m.fouls1 : m.fouls2
+                }))
+            }))
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `tournoi-${data.date}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 }
 

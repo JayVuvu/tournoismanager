@@ -1945,4 +1945,37 @@ h3 {
     .mobile-signature .signature-text strong {
         font-size: 15px;
     }
+}
+
+.team-inputs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.fouls-input {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #fff5f5;
+}
+
+.fouls-input::placeholder {
+    color: #ff6b6b;
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+    .team-inputs {
+        justify-content: center;
+    }
+    
+    .fouls-input {
+        width: 50px;
+        padding: 6px;
+        font-size: 13px;
+    }
 } 
